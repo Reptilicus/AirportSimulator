@@ -1,22 +1,28 @@
 
 public class Runway {
 	private int timeRemaining = 0;
-	private int runwayTime;
+	private int landingTime;
+	private int takeOffTime;
 
 	
-	public Runway(int runwayTime) {
-		this.runwayTime = runwayTime;
+	public Runway(int landingTime, int takeOffTime) {
+		this.landingTime = landingTime;
+		this.takeOffTime = takeOffTime;
 	}
 	
 	public void decrementTime() {
 		timeRemaining--;
 	}
 	
-	public boolean isBusy() {
+	public boolean isInUse() {
 		return (timeRemaining != 0);
 	}
 	
-	public void useRunway() {
-		timeRemaining = runwayTime;
+	public void land() {
+		timeRemaining = landingTime;
+	}
+	
+	public void takeOff() {
+		timeRemaining = takeOffTime;
 	}
 }

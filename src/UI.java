@@ -45,7 +45,7 @@ public class UI extends JFrame {
 	// REPLACE NAMES OF TEXT FIELDS WITH NAMES OF YOUR ITEMS
 	private JTextField arrivalRateTextField;	
 	private JTextField timeToLandTextField;
-	private JTextField fuelRemainingField;
+	private JTextField fuelRemainingTextField;
 	private JTextField departureRateTextField;	
 	private JTextField timeToTakeOffTextField;
 	private JTextField simulationRuntimeTextField;
@@ -145,11 +145,11 @@ public class UI extends JFrame {
 		inputPane.add(timeToLandTextField);
 		timeToLandTextField.setColumns(15);
 				
-		fuelRemainingField = new JTextField();
-		fuelRemainingField.setFont(defaultFont);
-		fuelRemainingField.setBounds(160, 58, 300, 20);
-		inputPane.add(fuelRemainingField);
-		fuelRemainingField.setColumns(15);
+		fuelRemainingTextField = new JTextField();
+		fuelRemainingTextField.setFont(defaultFont);
+		fuelRemainingTextField.setBounds(160, 58, 300, 20);
+		inputPane.add(fuelRemainingTextField);
+		fuelRemainingTextField.setColumns(15);
 			
 		departureRateTextField = new JTextField();
 		departureRateTextField.setFont(defaultFont);
@@ -236,6 +236,73 @@ public class UI extends JFrame {
 			return;
 		}
 		
+		int timeToLand = 0;
+		try	{
+			timeToLand = Integer.parseInt (timeToLandTextField.getText());
+		} catch (Exception e)	{
+			msgTextField.setText("Enter digits in Time To Land field");
+			return;
+		} 
+		
+		if (timeToLand <= 0)	{
+			msgTextField.setText("Time to land must be greater than 0");
+			return;
+		}
+		
+		int fuelRemaining = 0;
+		try	{
+			fuelRemaining = Integer.parseInt (fuelRemainingTextField.getText());
+		} catch (Exception e)	{
+			msgTextField.setText("Enter digits in fuelRemaining field");
+			return;
+		} 
+		
+		if (fuelRemaining < 0)	{
+			msgTextField.setText("Fuel Remaining cannot be negative");
+			return;
+		}
+		
+		double departureRate = 0.0;
+		try	{
+			departureRate = Double.parseDouble (departureRateTextField.getText());
+		} catch (Exception e)	{
+			msgTextField.setText("Enter digits in departure rate field");
+			return;
+		} 
+		
+		if ((departureRate < 0.0) || (departureRate > 1.0))	{
+			msgTextField.setText("Departure rate must be between 0.0 and 1.0");
+			return;
+		}
+		
+		int timeToTakeOff = 0;
+		try	{
+			timeToTakeOff = Integer.parseInt (timeToTakeOffTextField.getText());
+		} catch (Exception e)	{
+			msgTextField.setText("Enter digits in Time To Take Off field");
+			return;
+		} 
+		
+		if (timeToTakeOff <= 0)	{
+			msgTextField.setText("Time to takeoff must be greater than 0");
+			return;
+		}
+		
+		int simulationRuntime = 0;
+		try	{
+			simulationRuntime = Integer.parseInt (simulationRuntimeTextField.getText());
+		} catch (Exception e)	{
+			msgTextField.setText("Enter digits in the Simulation Runtime field");
+			return;
+		} 
+		
+		if (simulationRuntime < 0)	{
+			msgTextField.setText("Simulation Runtime must be greater than 0");
+			return;
+		}
+		AirportSimulate airport = new AirportSimulate(arrivalRate, timeToLand, fuelRemaining, departureRate, timeToTakeOff, simulationRuntime);
+		String s = airport.runSimulation();
+		displayResults.setText(s);
 		// ADD YOUR CODE HERE
 		// RETRIEVAL DATA FROM TEXTFIELDS AND ERROR CHECK
 		// CALL SIMULATION, RETURN AND DISPLAY RESULTS
@@ -249,7 +316,7 @@ public class UI extends JFrame {
 		// reset input fields to empty
 		arrivalRateTextField.setText("");
 		timeToLandTextField.setText("");
-		fuelRemainingField.setText("");
+		fuelRemainingTextField.setText("");
 		departureRateTextField.setText("");
 		timeToTakeOffTextField.setText("");
 		simulationRuntimeTextField.setText("");
